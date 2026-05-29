@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redirecting to kkl.education</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background-color: #FFFFFF;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Courier New', 'Fira Code', monospace;
+            padding: 0 16px;
+        }
+        .typing-text {
+            color: #AA6DC9;
+            font-size: 2rem;
+            font-weight: 500;
+            text-align: center;
+            border-right: 3px solid #AA6DC9;
+            white-space: nowrap;
+            overflow: hidden;
+            display: inline-block;
+            animation: blinkCursor 0.7s step-end infinite;
+        }
+        @keyframes blinkCursor {
+            0%, 100% { border-color: #AA6DC9; }
+            50% { border-color: transparent; }
+        }
+        .typewriter-wrapper {
+            max-width: 100%;
+            overflow-x: auto;
+            text-align: center;
+            scrollbar-width: none;
+        }
+        .typewriter-wrapper::-webkit-scrollbar {
+            display: none;
+        }
+        @media (max-width: 550px) {
+            .typing-text { font-size: 1.3rem; white-space: nowrap; }
+        }
+        @media (max-width: 420px) {
+            .typing-text { font-size: 1rem; white-space: nowrap; }
+        }
+        @media (max-width: 360px) {
+            .typing-text { font-size: 0.85rem; white-space: nowrap; }
+        }
+    </style>
+</head>
+<body>
+<div class="typewriter-wrapper">
+    <div id="dynamicText" class="typing-text"></div>
+</div>
+<script>
+    (function(){
+        const fullText = "Please wait to load Main page.";
+        let index = 0;
+        const el = document.getElementById("dynamicText");
+        el.textContent = "";
+        const typingSpeed = 45;
+        const redirectDelay = 2000;
+        let redirectTimer = null;
+        function typeChar(){
+            if(index < fullText.length){
+                el.textContent += fullText.charAt(index);
+                index++;
+                setTimeout(typeChar, typingSpeed);
+            }
+        }
+        typeChar();
+        redirectTimer = setTimeout(function(){
+            window.location.href = "https://www.kkl.education";
+        }, redirectDelay);
+    })();
+</script>
+</body>
+</html>
