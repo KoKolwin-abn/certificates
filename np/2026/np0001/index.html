@@ -1,0 +1,1411 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Kreative Kid's Lab - Chatbot</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        html,
+        body {
+            height: 100%;
+            overflow: hidden;
+            background: #1a1a2e;
+        }
+        body {
+            font-family: 'Pyidaungsu', 'Myanmar Text', 'Noto Sans Myanmar', 'Noto Sans Thai', 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        .chat-container {
+            width: 100%;
+            height: 100vh;
+            height: 100dvh;
+            max-width: 100%;
+            max-height: 100vh;
+            max-height: 100dvh;
+            background: #fff;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            position: relative;
+        }
+
+        @media (min-width: 769px) {
+            body {
+                background: #1a1a2e;
+                padding: 0;
+            }
+            .chat-container {
+                max-width: 100%;
+                max-height: 100vh;
+                border-radius: 0;
+                height: 100vh;
+                box-shadow: none;
+            }
+            .chat-header {
+                padding: 18px 24px !important;
+                min-height: 64px;
+            }
+            .profile-pic {
+                width: 48px !important;
+                height: 48px !important;
+                font-size: 20px !important;
+            }
+            .header-info h3 {
+                font-size: 18px !important;
+            }
+            .header-info p {
+                font-size: 13px !important;
+            }
+            .message {
+                font-size: 15px !important;
+                padding: 12px 16px !important;
+                max-width: 70% !important;
+            }
+            .chat-input {
+                padding: 14px 20px !important;
+                min-height: 64px;
+            }
+            .chat-input input {
+                font-size: 15px !important;
+                padding: 14px 20px !important;
+                height: 48px;
+            }
+            .chat-input button {
+                font-size: 15px !important;
+                padding: 14px 28px !important;
+                height: 48px;
+            }
+            .contact-btn,
+            .clear-all-btn,
+            .speaker-btn {
+                font-size: 18px !important;
+                padding: 6px 12px !important;
+                width: 42px !important;
+                height: 42px !important;
+            }
+            .close-btn {
+                font-size: 18px !important;
+                padding: 6px 12px !important;
+                width: 42px !important;
+                height: 42px !important;
+            }
+            .chat-messages {
+                padding: 20px 24px !important;
+            }
+            .message:hover {
+                opacity: 0.85;
+                transform: scale(1.01);
+                transition: all 0.15s ease;
+            }
+            .chat-messages::-webkit-scrollbar {
+                width: 8px;
+            }
+            .chat-messages::-webkit-scrollbar-thumb {
+                background: #b3b3b3;
+                border-radius: 10px;
+            }
+            .chat-messages::-webkit-scrollbar-track {
+                background: transparent;
+            }
+        }
+
+        @media (max-width: 768px) and (orientation: portrait) {
+            .chat-container {
+                max-width: 100%;
+                max-height: 100vh;
+                max-height: 100dvh;
+                border-radius: 0;
+                height: 100vh;
+                height: 100dvh;
+            }
+            .chat-header {
+                padding: 12px 14px;
+                min-height: 52px;
+            }
+            .profile-pic {
+                width: 38px;
+                height: 38px;
+                font-size: 16px;
+            }
+            .header-info h3 {
+                font-size: 14px;
+            }
+            .header-info p {
+                font-size: 10px;
+            }
+            .message {
+                font-size: 13px;
+                padding: 8px 12px;
+                max-width: 82%;
+            }
+            .chat-input {
+                padding: 8px 12px;
+                min-height: 48px;
+            }
+            .chat-input input {
+                font-size: 13px;
+                padding: 10px 14px;
+                height: 40px;
+            }
+            .chat-input button {
+                font-size: 13px;
+                padding: 10px 16px;
+                height: 40px;
+            }
+            .chat-messages {
+                padding: 12px 14px;
+            }
+            .contact-btn,
+            .clear-all-btn,
+            .speaker-btn {
+                font-size: 16px !important;
+                padding: 4px 8px !important;
+                width: 36px !important;
+                height: 36px !important;
+            }
+            .close-btn {
+                font-size: 16px !important;
+                padding: 4px 8px !important;
+                width: 36px !important;
+                height: 36px !important;
+            }
+        }
+
+        @media (max-width: 768px) and (orientation: landscape) {
+            .chat-container {
+                max-width: 100%;
+                max-height: 100vh;
+                max-height: 100dvh;
+                height: 100vh;
+                height: 100dvh;
+                border-radius: 0;
+            }
+            .chat-header {
+                padding: 6px 12px !important;
+                min-height: 40px !important;
+            }
+            .profile-pic {
+                width: 28px !important;
+                height: 28px !important;
+                font-size: 12px !important;
+            }
+            .header-info h3 {
+                font-size: 12px !important;
+            }
+            .header-info p {
+                font-size: 9px !important;
+                display: none;
+            }
+            .chat-messages {
+                padding: 6px 12px !important;
+            }
+            .message {
+                font-size: 12px !important;
+                padding: 6px 10px !important;
+                max-width: 75% !important;
+            }
+            .message .time {
+                font-size: 8px !important;
+            }
+            .chat-input {
+                padding: 4px 10px !important;
+                min-height: 36px !important;
+            }
+            .chat-input input {
+                font-size: 12px !important;
+                padding: 6px 12px !important;
+                height: 30px !important;
+                border-radius: 20px !important;
+            }
+            .chat-input button {
+                font-size: 12px !important;
+                padding: 6px 14px !important;
+                height: 30px !important;
+                border-radius: 20px !important;
+            }
+            .contact-btn,
+            .clear-all-btn,
+            .speaker-btn {
+                font-size: 14px !important;
+                padding: 2px 6px !important;
+                width: 28px !important;
+                height: 28px !important;
+                min-height: 24px !important;
+            }
+            .close-btn {
+                font-size: 14px !important;
+                padding: 2px 6px !important;
+                width: 28px !important;
+                height: 28px !important;
+                min-height: 24px !important;
+            }
+            .typing-indicator {
+                padding: 5px 10px !important;
+            }
+            .typing-indicator span {
+                width: 5px !important;
+                height: 5px !important;
+            }
+            .delete-confirm-box {
+                padding: 16px 20px !important;
+                max-width: 280px !important;
+            }
+            .delete-confirm-box h3 {
+                font-size: 14px !important;
+            }
+            .delete-confirm-box p {
+                font-size: 12px !important;
+            }
+            .delete-confirm-buttons button {
+                padding: 6px 18px !important;
+                font-size: 12px !important;
+                min-width: 60px !important;
+            }
+        }
+
+        .chat-header {
+            background: #075e54;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 1px solid #054740;
+            flex-shrink: 0;
+            z-index: 10;
+            flex-wrap: nowrap;
+            min-height: var(--header-height, 56px);
+            touch-action: pan-y;
+        }
+        .profile-pic {
+            border-radius: 50%;
+            background: #25d366;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+        .header-info {
+            flex: 1;
+            color: white;
+            min-width: 0;
+            overflow: hidden;
+        }
+        .header-info h3 {
+            font-weight: 600;
+            margin: 0;
+            line-height: 1.2;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .header-info p {
+            opacity: 0.8;
+            margin: 0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            flex-shrink: 0;
+            flex-wrap: nowrap;
+        }
+
+        .contact-btn {
+            background: #25d366;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            font-family: inherit;
+            cursor: pointer;
+            transition: background 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .contact-btn:hover {
+            background: #1da851;
+        }
+        .clear-all-btn {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            font-family: inherit;
+            cursor: pointer;
+            transition: background 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .clear-all-btn:hover {
+            background: rgba(255, 255, 255, 0.35);
+        }
+
+        .speaker-btn {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            font-size: 18px;
+            font-family: inherit;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .speaker-btn:hover {
+            background: rgba(255, 255, 255, 0.4);
+            transform: scale(1.05);
+        }
+        .speaker-btn.muted {
+            background: rgba(255, 80, 80, 0.3);
+        }
+        .speaker-btn.muted:hover {
+            background: rgba(255, 80, 80, 0.5);
+        }
+
+        .close-btn {
+            background: rgba(255, 80, 80, 0.3);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            font-size: 16px;
+            font-family: inherit;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 1;
+        }
+        .close-btn:hover {
+            background: rgba(255, 80, 80, 0.6);
+            transform: scale(1.1);
+        }
+        .close-btn:active {
+            transform: scale(0.9);
+        }
+
+        .swipe-indicator {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 2px;
+            margin-top: 8px;
+            display: none;
+        }
+        @media (max-width: 768px) {
+            .swipe-indicator {
+                display: block;
+            }
+        }
+
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            background: #ece5dd;
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+            -webkit-overflow-scrolling: touch;
+        }
+        .message {
+            border-radius: 12px;
+            line-height: 1.5;
+            word-wrap: break-word;
+            margin-bottom: 2px;
+            position: relative;
+            clear: both;
+            cursor: pointer;
+            transition: opacity 0.2s, transform 0.15s ease;
+            user-select: none;
+            animation: messageIn 0.2s ease;
+        }
+        @keyframes messageIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        .message:hover {
+            opacity: 0.85;
+        }
+        .message.user {
+            background: #dcf8c6;
+            align-self: flex-end;
+            border-bottom-right-radius: 2px;
+            color: #1a1a1a;
+        }
+        .message.bot {
+            background: #ffffff;
+            align-self: flex-start;
+            border-bottom-left-radius: 2px;
+            color: #1a1a1a;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+        }
+
+        .message.deleted {
+            background: transparent !important;
+            color: #999 !important;
+            font-style: italic;
+            cursor: pointer !important;
+            box-shadow: none !important;
+            padding: 5px 10px;
+            opacity: 0.7;
+        }
+        .message.deleted:hover {
+            opacity: 1;
+            transform: none !important;
+        }
+
+        .message .time {
+            color: #8a8a8a;
+            margin-top: 3px;
+            display: block;
+            text-align: right;
+            font-size: 9px;
+        }
+        .message.deleted .time {
+            color: #bbb;
+        }
+
+        .chat-input {
+            background: #f0f0f0;
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            border-top: 1px solid #ddd;
+            flex-shrink: 0;
+            min-height: var(--input-height, 52px);
+        }
+        .chat-input input {
+            flex: 1;
+            border: none;
+            border-radius: 25px;
+            font-family: inherit;
+            outline: none;
+            background: #fff;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+            min-width: 0;
+        }
+        .chat-input input::placeholder {
+            color: #999;
+        }
+        .chat-input input:focus {
+            box-shadow: inset 0 1px 4px rgba(7, 94, 84, 0.3);
+        }
+        .chat-input button {
+            background: #075e54;
+            border: none;
+            color: white;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.1s;
+            font-family: inherit;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+        .chat-input button:hover {
+            background: #054740;
+        }
+        .chat-input button:active {
+            transform: scale(0.95);
+        }
+
+        .typing-indicator {
+            display: none;
+            align-self: flex-start;
+            background: #ffffff;
+            padding: 10px 16px;
+            border-radius: 18px;
+            border-bottom-left-radius: 4px;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+            margin-bottom: 3px;
+        }
+        .typing-indicator span {
+            display: inline-block;
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #8a8a8a;
+            margin: 0 2px;
+            animation: typing 1.4s infinite both;
+        }
+        .typing-indicator span:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+        .typing-indicator span:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+        @keyframes typing {
+            0% {
+                opacity: 0.3;
+                transform: scale(0.9);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.2);
+            }
+            100% {
+                opacity: 0.3;
+                transform: scale(0.9);
+            }
+        }
+
+        .delete-confirm-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            animation: fadeIn 0.2s ease;
+        }
+        .delete-confirm-overlay.active {
+            display: flex;
+        }
+        .delete-confirm-box {
+            background: white;
+            border-radius: 16px;
+            padding: 24px 28px;
+            max-width: 340px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: scaleIn 0.25s ease;
+        }
+        .delete-confirm-box h3 {
+            font-size: 17px;
+            color: #1a1a1a;
+            margin-bottom: 6px;
+            font-weight: 600;
+        }
+        .delete-confirm-box p {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 16px;
+            line-height: 1.5;
+        }
+        .delete-confirm-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+        .delete-confirm-buttons button {
+            padding: 10px 28px;
+            border: none;
+            border-radius: 25px;
+            font-size: 14px;
+            font-family: inherit;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            min-width: 100px;
+        }
+        .delete-confirm-buttons .btn-cancel {
+            background: #f0f0f0;
+            color: #333;
+        }
+        .delete-confirm-buttons .btn-cancel:hover {
+            background: #e0e0e0;
+        }
+        .delete-confirm-buttons .btn-delete {
+            background: #dc3545;
+            color: white;
+        }
+        .delete-confirm-buttons .btn-delete:hover {
+            background: #c82333;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        @keyframes scaleIn {
+            from {
+                transform: scale(0.9);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        /* Message actions - hidden by default, shown on click */
+        .message-actions {
+            display: none;
+            position: absolute;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            padding: 4px 0;
+            z-index: 100;
+            min-width: 130px;
+            top: 100%;
+            left: 0;
+            margin-top: 4px;
+        }
+        .message-actions.show {
+            display: block;
+        }
+        .message-actions button {
+            display: block;
+            width: 100%;
+            padding: 6px 16px;
+            border: none;
+            background: transparent;
+            text-align: left;
+            font-family: inherit;
+            font-size: 13px;
+            cursor: pointer;
+            transition: background 0.15s;
+            color: #333;
+        }
+        .message-actions button:hover {
+            background: #f0f0f0;
+        }
+        .message-actions .delete-action {
+            color: #dc3545;
+        }
+        .message-actions .delete-action:hover {
+            background: #fde8ea;
+        }
+
+        .message.user .message-actions {
+            left: auto;
+            right: 0;
+        }
+
+        #toastMessage {
+            position: fixed;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.8);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-size: 14px;
+            z-index: 2000;
+            transition: opacity 0.3s ease;
+            font-family: inherit;
+            pointer-events: none;
+            opacity: 0;
+        }
+
+        @supports (padding: max(0px)) {
+            .chat-container {
+                padding-left: max(0px, env(safe-area-inset-left));
+                padding-right: max(0px, env(safe-area-inset-right));
+                padding-top: max(0px, env(safe-area-inset-top));
+                padding-bottom: max(0px, env(safe-area-inset-bottom));
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="chat-container" id="chatContainer">
+        <div class="swipe-indicator"></div>
+
+        <div class="chat-header" id="chatHeader">
+            <div class="profile-pic">📚</div>
+            <div class="header-info">
+                <h3>Kreative Kid's Lab</h3>
+                <p id="statusText">🔄 စတင်နေပါသည်...</p>
+            </div>
+            <div class="header-right">
+                <button class="speaker-btn" id="speakerBtn" onclick="toggleSpeech()" title="အသံဖွင့်/ပိတ်">🔊</button>
+                <button class="clear-all-btn" onclick="confirmClearAll()" title="အားလုံးဖျက်မည်">🗑️</button>
+                <button class="contact-btn" onclick="contactTeacher()" title="ဆရာထံဆက်သွယ်ရန်">📧</button>
+                <button class="close-btn" onclick="closeApp()" title="ပိတ်ရန်">✕</button>
+            </div>
+        </div>
+
+        <div class="chat-messages" id="chatMessages"></div>
+
+        <div class="chat-input">
+            <input type="text" id="userInput" placeholder="မေးခွန်းရိုက်ထည့်ပါ..." autofocus>
+            <button onclick="handleQuestion()">Send ➤</button>
+        </div>
+    </div>
+
+    <div class="delete-confirm-overlay" id="deleteOverlay">
+        <div class="delete-confirm-box">
+            <h3 id="deleteConfirmTitle">မက်ဆေ့ခ်ျကို ဖျက်မည်</h3>
+            <p id="deleteConfirmMsg">ဤမက်ဆေ့ခ်ျကို ဖျက်ပစ်မှာလား။</p>
+            <div class="delete-confirm-buttons">
+                <button class="btn-cancel" onclick="cancelDelete()">မလုပ်တော့ပါ</button>
+                <button class="btn-delete" onclick="confirmDelete()">ဖျက်မည်</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="toastMessage"></div>
+
+    <script>
+        // =============================================
+        // 📊 1. Configuration & State
+        // =============================================
+
+        const STORAGE_KB_KEY = 'knowledge_base_data';
+        const STORAGE_CHAT_KEY = 'chat_history_kkl';
+
+        let knowledgeBase = [];
+        let isDataLoaded = false;
+        let isSpeechMuted = false;
+        let dataLoadAttempted = false;
+        let activeActionMenu = null;
+        let deleteTarget = null;
+        let deleteMode = 'single';
+
+        // =============================================
+        // 📦 2. Default Knowledge Base (Fallback)
+        // =============================================
+
+        const defaultKnowledgeBase = [
+            { keywords: ["မင်္ဂလာပါ"], answer: "မင်္ဂလာပါခင်ဗျာ.." },
+            { keywords: ["အကြံပြု"], answer: "ကလေးအသက်ပေါ်မူတည်ပြီး အကြံပြုပေးပါမယ်။\n\n📌 ၂-၄နှစ် → Phonics သင်နည်းလမ်းညွှန် (မိဘအတွက်) + Pre KG English\n📌 ၅-၇နှစ် → Start to Read + Reading Fun\n📌 ၈-၁၀နှစ် → Read & Learn + Little Explore\n📌 ၁၀နှစ်အထက် → English Bridge + Spoken English + Computer Science\n\nကလေးအသက်ကို ပြောပါ၊ ပိုပြီးတိကျတဲ့ အကြံပြုချက် ရနိုင်ပါတယ်။" },
+            { keywords: ["စာအုပ်", "စာရင်း"], answer: "Kreative Kid's Lab ရဲ့ စုပ်စာရင်းတွေ...\n\n📖 Pre KG English (၃အုပ်)\n📖 English Bridge (Student + Teacher Guide)\n📖 Spoken English\n📖 Computer Science (Level 1-4)\n📖 Phonics သင်နည်းလမ်းညွှန်\n📖 Start to Read (၆အုပ်)\n📖 Reading Fun (၆အုပ်)\n📖 Read & Learn (၆အုပ်)\n📖 Little Explore (၆အုပ်)" }
+        ];
+
+        // =============================================
+        // 🔄 3. Load Knowledge Base (local data.json only)
+        // =============================================
+
+        function updateStatus(text, isOnline = true) {
+            const statusEl = document.getElementById('statusText');
+            if (statusEl) {
+                statusEl.textContent = text;
+                statusEl.style.color = isOnline ? '#aaffaa' : '#ffaa66';
+            }
+        }
+
+        function loadFromLocalStorage() {
+            const saved = localStorage.getItem(STORAGE_KB_KEY);
+            if (saved) {
+                try {
+                    const parsed = JSON.parse(saved);
+                    if (Array.isArray(parsed) && parsed.length > 0) {
+                        knowledgeBase = parsed;
+                        isDataLoaded = true;
+                        updateStatus('✅ ဒေတာ ရှိပါသည်');
+                        return true;
+                    }
+                } catch (e) {
+                    console.warn('⚠️ Failed to parse stored data');
+                }
+            }
+            return false;
+        }
+
+        function loadDefaultData() {
+            knowledgeBase = [...defaultKnowledgeBase];
+            localStorage.setItem(STORAGE_KB_KEY, JSON.stringify(knowledgeBase));
+            isDataLoaded = true;
+            updateStatus('📝 ပုံသေဒေတာ');
+        }
+
+        async function loadLocalDataJson() {
+            if (dataLoadAttempted) return;
+            dataLoadAttempted = true;
+
+            try {
+                updateStatus('🔄 data.json ဖတ်နေပါသည်...');
+
+                const response = await fetch('data.json', { cache: 'no-store' });
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+
+                const data = await response.json();
+                if (!Array.isArray(data) || data.length === 0) {
+                    throw new Error('Invalid data format');
+                }
+
+                const converted = data.map(item => {
+                    const answer = item.answer_my || item.answer_th || item.answer_en || 
+                                   'ကျေးဇူးပြု၍ ပြန်လည်စစ်ဆေးပါ။';
+                    return {
+                        keywords: Array.isArray(item.Keywords) ? item.Keywords : [],
+                        answer: answer
+                    };
+                }).filter(item => item.keywords.length > 0 && item.answer);
+
+                if (converted.length === 0) {
+                    throw new Error('No valid entries after conversion');
+                }
+
+                knowledgeBase = converted;
+                localStorage.setItem(STORAGE_KB_KEY, JSON.stringify(converted));
+                isDataLoaded = true;
+                updateStatus('✅ data.json မှ ဒေတာ loaded');
+                console.log('🔄 Data loaded from data.json:', converted.length, 'entries');
+
+            } catch (error) {
+                console.warn('⚠️ data.json load failed:', error.message);
+                updateStatus('⚠️ data.json မရှိပါ', false);
+                if (!loadFromLocalStorage()) {
+                    loadDefaultData();
+                }
+            }
+        }
+
+        // =============================================
+        // 🗣️ 4. Auto-Detect Language TTS
+        // =============================================
+
+        function detectLanguage(text) {
+            const myanmarRegex = /[\u1000-\u109F]/;
+            const thaiRegex = /[\u0E00-\u0E7F]/;
+            const englishRegex = /[a-zA-Z]/;
+
+            if (myanmarRegex.test(text)) return 'my-MM';
+            else if (thaiRegex.test(text)) return 'th-TH';
+            else if (englishRegex.test(text)) return 'en-US';
+            return 'my-MM';
+        }
+
+        function speakText(text) {
+            if (isSpeechMuted) return;
+            if (!('speechSynthesis' in window)) return;
+
+            window.speechSynthesis.cancel();
+
+            const cleanText = text.replace(/<[^>]*>/g, '').trim();
+            if (!cleanText) return;
+
+            const lang = detectLanguage(cleanText);
+
+            const utterance = new SpeechSynthesisUtterance(cleanText);
+            utterance.lang = lang;
+            utterance.rate = 0.9;
+            utterance.pitch = 1.0;
+            utterance.volume = 1.0;
+
+            const voices = window.speechSynthesis.getVoices();
+            const matchingVoice = voices.find(voice => voice.lang.startsWith(lang.split('-')[0]));
+            if (matchingVoice) {
+                utterance.voice = matchingVoice;
+            }
+
+            window.speechSynthesis.speak(utterance);
+            console.log(`🗣️ Speaking (${lang}):`, cleanText.substring(0, 50) + '...');
+        }
+
+        function toggleSpeech() {
+            isSpeechMuted = !isSpeechMuted;
+            const btn = document.getElementById('speakerBtn');
+            if (isSpeechMuted) {
+                btn.textContent = '🔇';
+                btn.classList.add('muted');
+                if ('speechSynthesis' in window) {
+                    window.speechSynthesis.cancel();
+                }
+            } else {
+                btn.textContent = '🔊';
+                btn.classList.remove('muted');
+            }
+        }
+
+        // =============================================
+        // ❌ 5. Close App
+        // =============================================
+
+        function closeApp() {
+            window.close();
+            if (!window.closed) {
+                if (window.navigator && window.navigator.standalone) {
+                    window.location.href = 'about:blank';
+                } else {
+                    try { window.location.href = 'about:blank'; } catch (e) { document.body.innerHTML = ''; }
+                }
+            }
+        }
+
+        // =============================================
+        // 👆 6. Swipe Down to Close
+        // =============================================
+
+        let touchStartY = 0,
+            touchStartX = 0,
+            isSwiping = false;
+        const SWIPE_THRESHOLD = 80;
+        const header = document.getElementById('chatHeader');
+
+        header.addEventListener('touchstart', function(e) {
+            touchStartY = e.touches[0].clientY;
+            touchStartX = e.touches[0].clientX;
+            isSwiping = true;
+        }, { passive: true });
+
+        header.addEventListener('touchmove', function(e) {
+            if (!isSwiping) return;
+            const deltaY = e.touches[0].clientY - touchStartY;
+            const deltaX = e.touches[0].clientX - touchStartX;
+            if (deltaY > SWIPE_THRESHOLD && Math.abs(deltaX) < 50) {
+                isSwiping = false;
+                closeApp();
+            }
+        }, { passive: true });
+
+        header.addEventListener('touchend', function() { isSwiping = false; }, { passive: true });
+
+        let mouseStartY = 0,
+            mouseStartX = 0,
+            isDragging = false;
+        header.addEventListener('mousedown', function(e) {
+            if (e.button !== 0) return;
+            mouseStartY = e.clientY;
+            mouseStartX = e.clientX;
+            isDragging = true;
+        });
+        document.addEventListener('mousemove', function(e) {
+            if (!isDragging) return;
+            const deltaY = e.clientY - mouseStartY;
+            const deltaX = e.clientX - mouseStartX;
+            if (deltaY > SWIPE_THRESHOLD && Math.abs(deltaX) < 50) {
+                isDragging = false;
+                closeApp();
+            }
+        });
+        document.addEventListener('mouseup', function() { isDragging = false; });
+
+        // =============================================
+        // 💬 7. Chat Functions (Exact Match)
+        // =============================================
+
+        function findExactMatch(question) {
+            const normalizedQuestion = question.toLowerCase();
+            let bestMatch = null;
+            let highestMatchCount = 0;
+
+            for (let item of knowledgeBase) {
+                const keywords = item.keywords || [];
+                let matchCount = 0;
+
+                for (let keyword of keywords) {
+                    if (normalizedQuestion.includes(keyword.toLowerCase())) {
+                        matchCount++;
+                    }
+                }
+
+                if (matchCount === keywords.length && matchCount >= 1) {
+                    if (matchCount > highestMatchCount) {
+                        highestMatchCount = matchCount;
+                        bestMatch = item;
+                    }
+                }
+            }
+
+            return bestMatch;
+        }
+
+        // =============================================
+        // 💾 8. Chat History & Message Functions
+        // =============================================
+
+        function getCurrentTime() {
+            const now = new Date();
+            return String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0');
+        }
+
+        function createMessageHTML(text, sender, isDeleted = false) {
+            const time = getCurrentTime();
+            const deletedClass = isDeleted ? 'deleted' : '';
+            const deletedText = isDeleted ? 'ဤမက်ဆေ့ခ်ျကို ဖျက်လိုက်သည်' : text;
+            return `<div class="message ${sender} ${deletedClass}" data-sender="${sender}" data-deleted="${isDeleted}" onclick="showMessageActions(event, this)">
+                <div class="message-content">${deletedText}</div>
+                <span class="time">${time}</span>
+                <div class="message-actions" onclick="event.stopPropagation();">
+                    ${sender === 'user' ? '<button onclick="copyMessage(this)">📋 ကူးယူ</button><button onclick="editMessage(this)">✏️ ပြင်ဆင်</button>' : '<button onclick="copyMessage(this)">📋 ကူးယူ</button>'}
+                    <button class="delete-action" onclick="deleteMessage(this)">🗑️ ဖျက်</button>
+                </div>
+            </div>`;
+        }
+
+        function saveChatHistory() {
+            const messagesDiv = document.getElementById('chatMessages');
+            const typingIndicator = messagesDiv.querySelector('.typing-indicator');
+            let html = messagesDiv.innerHTML;
+            if (typingIndicator) {
+                const tempDiv = document.createElement('div');
+                tempDiv.innerHTML = html;
+                const typing = tempDiv.querySelector('.typing-indicator');
+                if (typing) typing.remove();
+                html = tempDiv.innerHTML;
+            }
+            localStorage.setItem(STORAGE_CHAT_KEY, JSON.stringify(html));
+        }
+
+        function loadChatHistory() {
+            const messagesDiv = document.getElementById('chatMessages');
+            const saved = localStorage.getItem(STORAGE_CHAT_KEY);
+
+            if (saved) {
+                try {
+                    const html = JSON.parse(saved);
+                    if (html && html.trim() !== '') {
+                        messagesDiv.innerHTML = html;
+                        messagesDiv.scrollTop = messagesDiv.scrollHeight;
+                        return;
+                    }
+                } catch (e) {}
+            }
+
+            const welcomeMsg = createMessageHTML(
+                'မင်္ဂလာပါ 👋<br>Kreative Kid\'s Lab မှ ကြိုဆိုပါတယ်။<br>သင်ရိုးနဲ့ စာအုပ်တွေအကြောင်း မေးမြန်းနိုင်ပါတယ်။<br><span style="font-size:11px;color:#888;">💡 မေးခွန်းများကို စာလုံးအတိအကျ ရိုက်မေးပါ။</span>',
+                'bot'
+            );
+            messagesDiv.innerHTML = welcomeMsg;
+            saveChatHistory();
+        }
+
+        // =============================================
+        // 🗑️ 9. Message Actions (Copy, Edit, Delete)
+        // =============================================
+
+        function showMessageActions(event, element) {
+            event.stopPropagation();
+            if (element.dataset.deleted === 'true') return;
+
+            if (activeActionMenu) {
+                activeActionMenu.classList.remove('show');
+            }
+
+            const actions = element.querySelector('.message-actions');
+            if (!actions) return;
+
+            actions.classList.toggle('show');
+            if (actions.classList.contains('show')) {
+                activeActionMenu = actions;
+            } else {
+                activeActionMenu = null;
+            }
+        }
+
+        document.addEventListener('click', function(e) {
+            if (activeActionMenu && !activeActionMenu.contains(e.target)) {
+                activeActionMenu.classList.remove('show');
+                activeActionMenu = null;
+            }
+        });
+
+        function copyMessage(btn) {
+            const msgDiv = btn.closest('.message');
+            if (!msgDiv) return;
+            // Get text from message-content div to avoid copying time and actions
+            const contentDiv = msgDiv.querySelector('.message-content');
+            const text = contentDiv ? contentDiv.textContent.trim() : msgDiv.textContent.replace(/\d{1,2}:\d{2}$/, '').trim();
+            
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(text).then(() => {
+                    showToast('✅ ကူးယူပြီးပါပြီ');
+                }).catch(() => {
+                    fallbackCopy(text);
+                });
+            } else {
+                fallbackCopy(text);
+            }
+            
+            closeActionMenu(btn);
+        }
+
+        function fallbackCopy(text) {
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            document.body.appendChild(textarea);
+            textarea.select();
+            try {
+                document.execCommand('copy');
+                showToast('✅ ကူးယူပြီးပါပြီ');
+            } catch (e) {
+                showToast('❌ ကူးယူမရပါ');
+            }
+            document.body.removeChild(textarea);
+        }
+
+        function editMessage(btn) {
+            const msgDiv = btn.closest('.message');
+            if (!msgDiv || msgDiv.dataset.sender !== 'user') return;
+            if (msgDiv.dataset.deleted === 'true') return;
+
+            const contentDiv = msgDiv.querySelector('.message-content');
+            const text = contentDiv ? contentDiv.textContent.trim() : msgDiv.textContent.replace(/\d{1,2}:\d{2}$/, '').trim();
+            const input = document.getElementById('userInput');
+            input.value = text;
+            input.focus();
+            input.select();
+
+            msgDiv.remove();
+            saveChatHistory();
+            closeActionMenu(btn);
+            showToast('✏️ ပြင်ဆင်ရန် အဆင်သင့်');
+        }
+
+        function deleteMessage(btn) {
+            const msgDiv = btn.closest('.message');
+            if (!msgDiv || msgDiv.dataset.deleted === 'true') return;
+
+            deleteTarget = msgDiv;
+            deleteMode = 'single';
+            document.getElementById('deleteConfirmTitle').textContent = 'မက်ဆေ့ခ်ျကို ဖျက်မည်';
+            document.getElementById('deleteConfirmMsg').innerHTML =
+                'ဤမက်ဆေ့ခ်ျကို ဖျက်ပစ်မှာလား?<br><span style="font-size:11px;color:#999;">ဖျက်ပြီးရင် ပြန်မရယူနိုင်ပါ။</span>';
+            document.getElementById('deleteOverlay').classList.add('active');
+            
+            closeActionMenu(btn);
+        }
+
+        function closeActionMenu(btn) {
+            const actions = btn.closest('.message-actions');
+            if (actions) {
+                actions.classList.remove('show');
+                if (activeActionMenu === actions) {
+                    activeActionMenu = null;
+                }
+            }
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toastMessage');
+            toast.textContent = message;
+            toast.style.opacity = '1';
+            clearTimeout(toast._timeout);
+            toast._timeout = setTimeout(() => {
+                toast.style.opacity = '0';
+            }, 2000);
+        }
+
+        function confirmDelete() {
+            if (deleteMode === 'single' && deleteTarget) {
+                const sender = deleteTarget.dataset.sender;
+                const time = deleteTarget.querySelector('.time')?.textContent || getCurrentTime();
+                deleteTarget.className = `message ${sender} deleted`;
+                deleteTarget.dataset.deleted = 'true';
+                deleteTarget.innerHTML = `ဤမက်ဆေ့ခ်ျကို ဖျက်လိုက်သည် <span class="time">${time}</span>`;
+                deleteTarget.onclick = function(e) {
+                    this.remove();
+                    saveChatHistory();
+                };
+                const actions = deleteTarget.querySelector('.message-actions');
+                if (actions) actions.remove();
+                deleteTarget = null;
+            } else if (deleteMode === 'all') {
+                const messagesDiv = document.getElementById('chatMessages');
+                const allMessages = messagesDiv.querySelectorAll('.message:not(.deleted)');
+                allMessages.forEach(msg => {
+                    const sender = msg.dataset.sender;
+                    const time = msg.querySelector('.time')?.textContent || getCurrentTime();
+                    msg.className = `message ${sender} deleted`;
+                    msg.dataset.deleted = 'true';
+                    msg.innerHTML = `ဤမက်ဆေ့ခ်ျကို ဖျက်လိုက်သည် <span class="time">${time}</span>`;
+                    msg.onclick = function(e) {
+                        this.remove();
+                        saveChatHistory();
+                    };
+                    const actions = msg.querySelector('.message-actions');
+                    if (actions) actions.remove();
+                });
+            }
+
+            document.getElementById('deleteOverlay').classList.remove('active');
+            deleteMode = 'single';
+            saveChatHistory();
+        }
+
+        function confirmClearAll() {
+            const messagesDiv = document.getElementById('chatMessages');
+            const messages = messagesDiv.querySelectorAll('.message:not(.deleted)');
+            if (messages.length === 0) {
+                showToast('ဖျက်စရာ မက်ဆေ့ခ်ျမရှိပါ');
+                return;
+            }
+            deleteMode = 'all';
+            deleteTarget = null;
+            document.getElementById('deleteConfirmTitle').textContent = 'မက်ဆေ့ခ်ျအားလုံးကို ဖျက်မည်';
+            document.getElementById('deleteConfirmMsg').innerHTML =
+                'စကားဝိုင်းထဲက မက်ဆေ့ခ်ျအားလုံးကို ဖျက်ပစ်မှာလား?<br><span style="font-size:11px;color:#999;">ဖျက်ပြီးရင် ပြန်မရယူနိုင်ပါ။</span>';
+            document.getElementById('deleteOverlay').classList.add('active');
+        }
+
+        function cancelDelete() {
+            document.getElementById('deleteOverlay').classList.remove('active');
+            deleteTarget = null;
+            deleteMode = 'single';
+        }
+
+        document.getElementById('deleteOverlay').addEventListener('click', function(e) {
+            if (e.target === this) cancelDelete();
+        });
+
+        // =============================================
+        // 💬 10. Main Chat Functions
+        // =============================================
+
+        function addMessage(text, sender) {
+            const messagesDiv = document.getElementById('chatMessages');
+            const messageHTML = createMessageHTML(text, sender);
+            messagesDiv.innerHTML += messageHTML;
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+            saveChatHistory();
+
+            if (sender === 'bot' && !text.startsWith('🔄') && !text.startsWith('⚠️')) {
+                setTimeout(() => speakText(text), 400);
+            }
+        }
+
+        function showTyping() {
+            const messagesDiv = document.getElementById('chatMessages');
+            const typingDiv = document.createElement('div');
+            typingDiv.className = 'typing-indicator';
+            typingDiv.id = 'typingIndicator';
+            typingDiv.innerHTML = `<span></span><span></span><span></span>`;
+            messagesDiv.appendChild(typingDiv);
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+            typingDiv.style.display = 'block';
+        }
+
+        function hideTyping() {
+            const typingDiv = document.getElementById('typingIndicator');
+            if (typingDiv) {
+                typingDiv.remove();
+                saveChatHistory();
+            }
+        }
+
+        function handleQuestion() {
+            const input = document.getElementById('userInput');
+            const question = input.value.trim();
+            if (!question) return;
+
+            addMessage(question, 'user');
+            input.value = '';
+            input.focus();
+
+            showTyping();
+
+            setTimeout(() => {
+                hideTyping();
+
+                const result = findExactMatch(question);
+                if (result) {
+                    addMessage(result.answer, 'bot');
+                } else {
+                    const suggestions = knowledgeBase.slice(0, 5).map(item => {
+                        const keys = item.keywords || [];
+                        return keys[0] || '';
+                    }).filter(Boolean).join('၊ ');
+                    addMessage(
+                        `🙏 ကျေးဇူးပြု၍ ပိုမိုတိကျသော မေးခွန်းတစ်ခုကို မေးမြန်းပါ။<br><br>💡 အကြံပြုချက်များ: ${suggestions || 'ကွန်ပျူတာ, မောက်စ်, ကီးဘုတ်, Tux Paint'} စသည်တို့ကို မေးမြန်းနိုင်ပါတယ်။`,
+                        'bot');
+                }
+            }, 500 + Math.random() * 600);
+        }
+
+        // =============================================
+        // 📧 11. Contact Teacher
+        // =============================================
+
+        function contactTeacher() {
+            const email = 'kokolwin.abn@gmail.com';
+            const subject = 'Kreative Kid\'s Lab Chatbot မှ ဆက်သွယ်ခြင်း';
+            const body = 'မင်္ဂလာပါဆရာ...\n\n(သင့်စာကို ဤနေရာတွင် ရေးပါ)';
+            window.location.href = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+            addMessage('📧 ဆရာထံ အီးမေးလ်ပို့ရန် စတင်နေပါပြီ...', 'bot');
+        }
+
+        // =============================================
+        // 🔄 12. Manual Update (Double-click header)
+        // =============================================
+
+        document.querySelector('.chat-header').addEventListener('dblclick', function() {
+            if (confirm('ဒေတာကို data.json မှ ပြန်လည်ဖတ်မှာလား?')) {
+                dataLoadAttempted = false;
+                loadLocalDataJson();
+                showToast('🔄 ဒေတာ ပြန်လည်ဖတ်နေပါသည်...');
+            }
+        });
+
+        // =============================================
+        // ⌨️ 13. Enter Key
+        // =============================================
+
+        document.getElementById('userInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                handleQuestion();
+            }
+        });
+
+        // =============================================
+        // 🚀 14. Initialize
+        // =============================================
+
+        window.addEventListener('load', function() {
+            loadChatHistory();
+
+            if (!loadFromLocalStorage()) {
+                loadDefaultData();
+            }
+
+            setTimeout(() => {
+                loadLocalDataJson();
+            }, 500);
+
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.getVoices();
+            }
+
+            document.getElementById('userInput').focus();
+
+            window.addEventListener('online', function() {
+                updateStatus('📶 အင်တာနက်ပြန်ရပါပြီ', true);
+            });
+
+            window.addEventListener('offline', function() {
+                updateStatus('📶 အင်တာနက်မရှိပါ', false);
+            });
+        });
+
+        console.log('✅ KKL Chatbot is ready (local data.json)');
+        console.log('📚 Total entries:', knowledgeBase.length);
+    </script>
+</body>
+</html>
